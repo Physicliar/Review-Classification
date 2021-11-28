@@ -1,9 +1,9 @@
 import json
 
 from django.http import HttpResponseRedirect, HttpResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
+from . import M
 from .forms import ApplicationForm
-from .models import Application
 import requests
 
 
@@ -27,5 +27,7 @@ def review(request, app_id):
     request = requests.get(url)
     data = request.json()
     entries = [entry['content']['label'] for entry in data['feed']['entry']]
-    print(entries)
-    return HttpResponse(json.dumps(entries), content_type="application/json")
+    pred = M.predict(entries)
+    res = [[entries[i], pred[i].tolist()] for i in range(len(entries))]
+
+    return HttpResponse(json.dumps(res, indent=4), content_type="application/json")
