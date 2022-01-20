@@ -27,5 +27,15 @@ def review(request, app_id):
     request = requests.get(url)
     data = request.json()
     entries = [entry['content']['label'] for entry in data['feed']['entry']]
-    print(entries)
-    return HttpResponse(json.dumps(entries), content_type="application/json")
+    s = []
+    for i, e in enumerate(entries):
+        s.append({
+            "id": i,
+            "content": e,
+            "informative": True,
+            "bugReport": False,
+            "featureRequest": False,
+            "praise": True,
+            "critic": False,
+        })
+    return HttpResponse(json.dumps(s, indent=4), content_type="application/json")
