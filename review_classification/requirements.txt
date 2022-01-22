@@ -1,8 +1,0 @@
-pandas
-numpy
-scikit-learn
-openpyxl
-tensorflow
-tensorflow-gpu
-tensorflow_hub
-tensorflow_text
